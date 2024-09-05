@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="PJf-sl-TKQ">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Mini-apps-->
+        <scene sceneID="cdm-bN-fhM">
+            <objects>
+                <tableViewController id="Xqg-tC-PgA" customClass="AppListViewController" customModule="OkProject" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="5cj-Fx-zOL">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="appCell" id="bOL-Cb-XpU" customClass="AppTableViewCell" customModule="OkProject" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="50" width="393" height="43.666667938232422"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bOL-Cb-XpU" id="heJ-ET-aUK">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="43.666667938232422"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Temp" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hZz-xK-NBb">
+                                            <rect key="frame" x="330" y="11.000000000000002" width="43" height="21.666666666666671"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Weather" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TpN-GM-yr1">
+                                            <rect key="frame" x="20" y="11.000000000000002" width="66" height="21.666666666666671"/>
+                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="hZz-xK-NBb" firstAttribute="top" secondItem="heJ-ET-aUK" secondAttribute="topMargin" id="4Bg-Xg-Xua"/>
+                                        <constraint firstItem="TpN-GM-yr1" firstAttribute="top" secondItem="heJ-ET-aUK" secondAttribute="topMargin" id="OeH-r5-lUd"/>
+                                        <constraint firstItem="hZz-xK-NBb" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="TpN-GM-yr1" secondAttribute="trailing" constant="8" symbolic="YES" id="Ox6-Tg-gdh"/>
+                                        <constraint firstItem="TpN-GM-yr1" firstAttribute="leading" secondItem="heJ-ET-aUK" secondAttribute="leadingMargin" id="ZUl-ik-536"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="hZz-xK-NBb" secondAttribute="trailing" id="e2D-lG-grg"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="TpN-GM-yr1" secondAttribute="bottom" id="hlI-s5-caa"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="hZz-xK-NBb" secondAttribute="bottom" id="naX-5q-vmP"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="appData" destination="TpN-GM-yr1" id="e6b-Tb-Xvi"/>
+                                    <outlet property="appName" destination="hZz-xK-NBb" id="geA-1f-mhi"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <sections/>
+                        <connections>
+                            <outlet property="dataSource" destination="Xqg-tC-PgA" id="mJT-EO-hxH"/>
+                            <outlet property="delegate" destination="Xqg-tC-PgA" id="xEZ-bY-01w"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Mini-apps" id="Wk2-br-EQC"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ikB-Je-hfq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1959.5419847328244" y="22.535211267605636"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="7aT-ms-giO">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="PJf-sl-TKQ" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="yzf-KK-4E1">
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Xqg-tC-PgA" kind="relationship" relationship="rootViewController" id="S8C-Jd-wit"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Byc-M4-ngi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1032.824427480916" y="22.535211267605636"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
