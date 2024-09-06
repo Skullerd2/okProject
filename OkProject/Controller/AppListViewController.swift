@@ -7,6 +7,7 @@ final class AppListViewController: UITableViewController, CLLocationManagerDeleg
     private let networkManager = NetworkManager.shared
     private var weather = WeatherModel(main: nil)
     let locationManager = CLLocationManager()
+    var appList = [AppModel]()
     
     var lat: Double = 0
     var lon: Double = 0
@@ -53,13 +54,6 @@ final class AppListViewController: UITableViewController, CLLocationManagerDeleg
         return 3
     }
     
-    
-    @IBAction func addButtonTapped(_ sender: Any) {
-        
-        let alertController = UIAlertController(title: "Add new application", message: "Choose new application", preferredStyle: .actionSheet)
-        alertController.addTextField()
-    }
-    
 }
 
 extension AppListViewController{
@@ -81,7 +75,6 @@ extension AppListViewController{
     enum tableViewStyle{
         case smallCells
         case normalCells
-        case bigCells
     }
     
     func changeStyle(to: tableViewStyle){
