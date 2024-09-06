@@ -6,8 +6,11 @@ final class AppListViewController: UITableViewController, CLLocationManagerDeleg
     
     private let networkManager = NetworkManager.shared
     private var weather = WeatherModel(main: nil)
+    
     let locationManager = CLLocationManager()
     var appList = [AppModel]()
+    
+    var tableViewStyle: TableViewStyle = .smallCells
     
     var lat: Double = 0
     var lon: Double = 0
@@ -19,8 +22,32 @@ final class AppListViewController: UITableViewController, CLLocationManagerDeleg
         locationManager.requestWhenInUseAuthorization()
         locationManager.requestLocation()
         
+        switch(tableViewStyle){
+        case .smallCells:
+            tableView.isUserInteractionEnabled = false
+        case .normalCells:
+            tableView.isUserInteractionEnabled = true
+        }
+        
     }
     
+    @IBAction func unwindToAppList(segue: UIStoryboardSegue) {
+        if let sourceVC = segue.source as? AddAppViewController,
+           let newApp = sourceVC.newApplication {
+            appList.append(newApp)
+            tableView.reloadData()
+        }
+    }
+    
+    @IBAction func changeStyleButtonTapped(_ sender: Any) {
+        
+        changeStyle()
+        let alertController = UIAlertController(title: "Style was changed", message: "New style is \(tableViewStyle)", preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "Okay", style: .default)
+        alertController.addAction(alertAction)
+        present(alertController, animated: true)
+    }
+
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
             lat = location.coordinate.latitude
@@ -45,15 +72,26 @@ final class AppListViewController: UITableViewController, CLLocationManagerDeleg
         print("Error: \(error)")
     }
     
+    @IBAction func unwindToFirstScreen(_ segue: UIStoryboardSegue){
+        
+    }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 0
+        return 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return appList.count
     }
     
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "appCell", for: indexPath) as? AppTableViewCell else {
+            return UITableViewCell()
+        }
+        cell.configure(with: appList[indexPath.row])
+        return cell
+    }
 }
 
 extension AppListViewController{
@@ -72,13 +110,20 @@ extension AppListViewController{
 }
 
 extension AppListViewController{
-    enum tableViewStyle{
+    enum TableViewStyle{
         case smallCells
         case normalCells
     }
     
-    func changeStyle(to: tableViewStyle){
-        
+    private func changeStyle(){
+        switch(tableViewStyle){
+        case .smallCells:
+            tableViewStyle = .normalCells
+            tableView.isUserInteractionEnabled = true
+        case .normalCells:
+            tableViewStyle = .smallCells
+            tableView.isUserInteractionEnabled = false
+        }
     }
 }
 

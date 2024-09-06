@@ -13,12 +13,16 @@ class AddAppViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     @IBOutlet weak var colorSegmentedControl: UISegmentedControl!
     @IBOutlet weak var appPickerView: UIPickerView!
     
+    var newApplication: AppModel?
+    
     let appList: [String] = ["weather", "location"]
     let fontList: [String] = ["Helvetica Neue", "Arial", "Verdana"]
     let colorList: [String: UIColor] = ["white": .white, "green": .green, "red": .red]
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationItem.hidesBackButton = true
         
         appPickerView.delegate = self
         appPickerView.dataSource = self
@@ -38,6 +42,32 @@ class AddAppViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         colorSegmentedControl.selectedSegmentIndex = 0
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier{
+        case "toFirstScreenSave":
+            prepareFirstScreen(segue)
+        default:
+            break
+        }
+    }
+    
+    private func prepareFirstScreen(_ segue: UIStoryboardSegue){
+        guard let destinationController = segue.destination as? AppListViewController else{
+            return
+        }
+        
+        var row = 0
+        let selectedIndex = colorSegmentedControl.selectedSegmentIndex
+        
+        if let component = appPickerView?.selectedRow(inComponent: 0){
+            row = component
+        }
+        
+        newApplication = AppModel(appName: appList[row], appFont: UIFont(name: fontList[fontSegmentedControl.selectedSegmentIndex], size: 17)!, appColor: colorList[colorSegmentedControl.titleForSegment(at: selectedIndex)!]!, data: "")
+        destinationController.appList.append(newApplication!)
+        destinationController.tableView.reloadData()
+    }
+    
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -49,18 +79,4 @@ class AddAppViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return appList[row]
     }
-    
-    @IBAction func saveButtonTapped(_ sender: Any) {
-        
-        var row = 0
-        
-        if let component = appPickerView?.selectedRow(inComponent: 0){
-            row = component
-        }
-        
-        let selectedIndex = colorSegmentedControl.selectedSegmentIndex
-        
-        var newApplication = AppModel(appName: appList[row], appFont: UIFont(name: fontList[fontSegmentedControl.selectedSegmentIndex], size: 17)!, appColor: colorList[colorSegmentedControl.titleForSegment(at: selectedIndex)!]!, data: "")
-    }
-    
 }

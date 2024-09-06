@@ -20,4 +20,5 @@ struct AppModel{
         self.appColor = appColor
         self.data = data
     }
+    
 }
