@@ -6,6 +6,7 @@ class AddAppViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     @IBOutlet weak var colorSegmentedControl: UISegmentedControl!
     @IBOutlet weak var appPickerView: UIPickerView!
     
+    var appListVC = AppListViewController()
     var newApplication: AppModel?
     
     let appList: [String] = ["weather", "location"]
@@ -59,6 +60,7 @@ class AddAppViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         newApplication = AppModel(appName: appList[row], appFont: UIFont(name: fontList[fontSegmentedControl.selectedSegmentIndex], size: 17)!, appColor: colorList[colorSegmentedControl.titleForSegment(at: selectedIndex)!]!, data: "")
         destinationController.appList.append(newApplication!)
         destinationController.tableView.reloadData()
+  //      appListVC.fetchCurrentWeather()
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {

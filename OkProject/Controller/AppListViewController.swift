@@ -42,6 +42,14 @@ final class AppListViewController: UITableViewController {
             tableView.isUserInteractionEnabled = true
         }
         
+        DispatchQueue.main.async {
+            if self.appList.contains(where: { $0.appName == "location" }){
+                self.fetchCurrentLocation()
+            }
+        }
+        if self.appList.contains(where: { $0.appName == "weather" }){
+            self.fetchCurrentWeather()
+        }
     }
     
     @IBAction func unwindToAppList(segue: UIStoryboardSegue) {
@@ -96,18 +104,18 @@ final class AppListViewController: UITableViewController {
         
         switch (appList[indexPath.row].appName){
         case "weather":
-            if weatherData != "" {
+            if weatherData == ""{
+                fetchCurrentWeather()
+                weatherData = appList[indexPath.row].data
+            } else{
                 appList[indexPath.row].data = weatherData
-            } else {
-                fetchCurrentWeather(forCellAt: indexPath)
             }
         case "location":
-            if locationData != "" {
+            if locationData == ""{
+                fetchCurrentLocation()
+                locationData = appList[indexPath.row].data
+            } else{
                 appList[indexPath.row].data = locationData
-                print(0)
-            } else {
-                fetchCurrentLocation(forCellAt: indexPath)
-                print(1)
             }
         default:
             break
@@ -129,45 +137,37 @@ final class AppListViewController: UITableViewController {
 
 extension AppListViewController{
     
-    func fetchCurrentLocation(forCellAt indexPath: IndexPath){
-        
+    func fetchCurrentLocation(){
         locationManager.fetchCurrentLocation(senderVC: "location") { [weak self] lat, lon in
             self?.locationManager.getCity(lat: lat, lon: lon, completion: {[weak self] result in
                 self?.locationData = result
-                self?.appList[indexPath.row].data = result
-                self?.reloadCellData(forCellAt: indexPath, data: result)
+                self?.updateAppListData(forAppName: "location", newData: result)
+                self?.tableView.reloadData()
             })
         }
     }
     
-    
-    func fetchCurrentWeather(forCellAt indexPath: IndexPath){
-        
-        var dataString: String = ""
-        
+    func fetchCurrentWeather(){
         locationManager.fetchCurrentLocation(senderVC: "weather") { [weak self] lat, lon in
             self?.networkManager.fetchCurrentWeather(lat: lat, lon: lon) { [weak self] result in
                 switch result{
                 case .success(let weather):
                     self?.weather = weather
                     self!.weatherData = String(round(weather.main!.temp))
-                    self?.appList[indexPath.row].data = "temp: \(self!.weatherData)"
+                    self?.updateAppListData(forAppName: "weather", newData: "temp: \(self!.weatherData)")
                 case .failure(let error):
                     print(error)
-                    self?.appList[indexPath.row].data = "temp: Error"
+                    self?.weatherData = "temp: Error"
+                    self?.updateAppListData(forAppName: "weather", newData: "temp: Error")
                 }
-                
-                dataString = (self?.appList[indexPath.row].data)!
-                self?.reloadCellData(forCellAt: indexPath, data: dataString)
+                self?.tableView.reloadData()
             }
         }
     }
     
-    func reloadCellData(forCellAt indexPath: IndexPath, data: String){
-        if let visibleRows = self.tableView.indexPathsForVisibleRows,
-           visibleRows.contains(indexPath),
-           let cell = self.tableView.cellForRow(at: indexPath) as? AppTableViewCell {
-            cell.appData.text = self.appList[indexPath.row].data
+    private func updateAppListData(forAppName appName: String, newData: String) {
+        for (index, app) in appList.enumerated() where app.appName == appName {
+            appList[index].data = newData
         }
     }
     
