@@ -18,7 +18,5 @@ struct LocationModel{
 }
 
 struct MainDataLocation{
-    var lat: Double
-    var lon: Double
     var city: String
 }

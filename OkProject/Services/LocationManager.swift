@@ -18,14 +18,17 @@ final class LocationManager: NSObject, CLLocationManagerDelegate{
     var lon: Double = 0
     
     private var completionHandler: ((Double, Double) -> Void)?
+    private var completionHandlerLocation: ((String) -> Void)?
+    private var sender: String = ""
     
     private override init() {}
     
-    func fetchCurrentLocation(completion: @escaping (Double, Double) -> Void){
+    func fetchCurrentLocation(senderVC: String ,completion: @escaping (Double, Double) -> Void){
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.requestLocation()
         
+        sender = senderVC
         self.completionHandler = completion
     }
     
@@ -33,17 +36,21 @@ final class LocationManager: NSObject, CLLocationManagerDelegate{
         if let location = locations.last {
             lat = location.coordinate.latitude
             lon = location.coordinate.longitude
-            reverseGeocode(location: location)
             completionHandler?(lat, lon)
         }
     }
     
-    func reverseGeocode(location: CLLocation) {
+    func getCity(lat: Double, lon: Double, completion: @escaping ((String) -> Void)){
         let geocoder = CLGeocoder()
+        let location = CLLocation(latitude: lat, longitude: lon)
+        var loc = ""
         
-        geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
+        self.completionHandlerLocation = completion
+        
+        geocoder.reverseGeocodeLocation(location) {[weak self] (placemarks, error) in
             if let firstPlacemark = placemarks?.first {
-                print(firstPlacemark.locality ?? "Location not found")
+                loc = firstPlacemark.locality ?? "Error"
+                self?.completionHandlerLocation!(loc)
             }
         }
     }

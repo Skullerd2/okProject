@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A5516C9C2C8CB5FD00F55B41 /* BigAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5516C9B2C8CB5FD00F55B41 /* BigAppViewController.swift */; };
 		A56F224C2C884F8600010735 /* AppListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56F224B2C884F8600010735 /* AppListViewController.swift */; };
 		A56F22512C88503A00010735 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56F22502C88503A00010735 /* NetworkManager.swift */; };
 		A56F22532C88522800010735 /* AppTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56F22522C88522800010735 /* AppTableViewCell.swift */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A5516C9B2C8CB5FD00F55B41 /* BigAppViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigAppViewController.swift; sourceTree = "<group>"; };
 		A56F224B2C884F8600010735 /* AppListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppListViewController.swift; sourceTree = "<group>"; };
 		A56F22502C88503A00010735 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		A56F22522C88522800010735 /* AppTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTableViewCell.swift; sourceTree = "<group>"; };
@@ -70,6 +72,7 @@
 				A56F224B2C884F8600010735 /* AppListViewController.swift */,
 				A56F22522C88522800010735 /* AppTableViewCell.swift */,
 				A5A790992C8B15510075D667 /* AddAppViewController.swift */,
+				A5516C9B2C8CB5FD00F55B41 /* BigAppViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -213,6 +216,7 @@
 				A5A7909A2C8B15510075D667 /* AddAppViewController.swift in Sources */,
 				A56F224C2C884F8600010735 /* AppListViewController.swift in Sources */,
 				A5A7909F2C8BBFD90075D667 /* LocationModel.swift in Sources */,
+				A5516C9C2C8CB5FD00F55B41 /* BigAppViewController.swift in Sources */,
 				A5A7909C2C8BBF5F0075D667 /* LocationManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -18,20 +18,20 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="appCell" id="bOL-Cb-XpU" customClass="AppTableViewCell" customModule="OkProject" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="50" width="393" height="43"/>
+                                <rect key="frame" x="0.0" y="50" width="393" height="43.666667938232422"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bOL-Cb-XpU" id="heJ-ET-aUK">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="43.666667938232422"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Temp" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hZz-xK-NBb">
-                                            <rect key="frame" x="331.33333333333331" y="11" width="41.666666666666686" height="21"/>
+                                            <rect key="frame" x="331.33333333333331" y="11.000000000000002" width="41.666666666666686" height="21.666666666666671"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Weather" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TpN-GM-yr1">
-                                            <rect key="frame" x="20" y="11" width="65.666666666666671" height="21"/>
+                                            <rect key="frame" x="20" y="11.000000000000002" width="65.666666666666671" height="21.666666666666671"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -50,7 +50,7 @@
                                 <connections>
                                     <outlet property="appData" destination="hZz-xK-NBb" id="pfH-g9-pBK"/>
                                     <outlet property="appName" destination="TpN-GM-yr1" id="nAf-E4-Fiw"/>
-                                    <segue destination="lR6-OD-Ibx" kind="show" id="0Ts-YV-5xX"/>
+                                    <segue destination="lR6-OD-Ibx" kind="show" identifier="showBigVC" id="0Ts-YV-5xX"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -80,21 +80,47 @@
             </objects>
             <point key="canvasLocation" x="1661.8320610687022" y="64.788732394366207"/>
         </scene>
-        <!--View Controller-->
+        <!--App Name-->
         <scene sceneID="5Zx-yR-TBv">
             <objects>
-                <viewController id="lR6-OD-Ibx" sceneMemberID="viewController">
+                <viewController id="lR6-OD-Ibx" customClass="BigAppViewController" customModule="OkProject" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="nf5-2q-KSa">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4Jh-7W-lJ3">
+                                <rect key="frame" x="16" y="103" width="361" height="361"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="4Jh-7W-lJ3" secondAttribute="height" multiplier="1:1" id="JGf-E2-MUb"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Data" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sCz-G6-pya">
+                                <rect key="frame" x="16" y="469" width="361" height="26.333333333333314"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="qQQ-Hq-z2o"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="sCz-G6-pya" firstAttribute="top" secondItem="4Jh-7W-lJ3" secondAttribute="bottom" constant="5" id="07n-8U-Nor"/>
+                            <constraint firstItem="qQQ-Hq-z2o" firstAttribute="trailing" secondItem="sCz-G6-pya" secondAttribute="trailing" constant="16" id="3AQ-Oc-j9n"/>
+                            <constraint firstItem="4Jh-7W-lJ3" firstAttribute="top" secondItem="qQQ-Hq-z2o" secondAttribute="top" id="bv7-rG-M1E"/>
+                            <constraint firstItem="4Jh-7W-lJ3" firstAttribute="leading" secondItem="qQQ-Hq-z2o" secondAttribute="leading" constant="16" id="lbw-Pb-gEC"/>
+                            <constraint firstItem="qQQ-Hq-z2o" firstAttribute="trailing" secondItem="4Jh-7W-lJ3" secondAttribute="trailing" constant="16" id="oqh-Gf-vUL"/>
+                            <constraint firstItem="sCz-G6-pya" firstAttribute="leading" secondItem="qQQ-Hq-z2o" secondAttribute="leading" constant="16" id="yt0-XN-jim"/>
+                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="Vts-kn-LhZ"/>
+                    <navigationItem key="navigationItem" title="App Name" id="Vts-kn-LhZ"/>
+                    <connections>
+                        <outlet property="appDataLabel" destination="sCz-G6-pya" id="6ez-eZ-VNk"/>
+                        <outlet property="appIcon" destination="4Jh-7W-lJ3" id="yAH-GF-xkY"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UQG-hq-7Mi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2552" y="65"/>
+            <point key="canvasLocation" x="2550.3816793893129" y="64.788732394366207"/>
         </scene>
         <!--New application settings-->
         <scene sceneID="pfr-qD-3Cp">
@@ -105,7 +131,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S2A-QY-adH">
-                                <rect key="frame" x="0.0" y="292" width="393" height="216"/>
+                                <rect key="frame" x="0.0" y="291.66666666666669" width="393" height="216"/>
                             </pickerView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select font" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aUN-tc-c17">
                                 <rect key="frame" x="16" y="103" width="89.333333333333329" height="21.666666666666671"/>
@@ -208,7 +234,6 @@
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="0.033940217930000002" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <color key="barTintColor" white="0.033940217930000002" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" white="0.033940217930000002" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </textAttributes>
