@@ -1,10 +1,3 @@
-//
-//  AppModel.swift
-//  OkProject
-//
-//  Created by Vadim on 06.09.2024.
-//
-
 import Foundation
 import UIKit
 

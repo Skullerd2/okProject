@@ -1,4 +1,3 @@
-
 import Foundation
 import Alamofire
 
@@ -29,8 +28,6 @@ final class NetworkManager{
                     completion(.failure(error))
                 }
             }
-        
-        
-        }
     }
+}
 

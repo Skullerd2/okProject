@@ -1,15 +1,14 @@
-
 import Foundation
 
 struct WeatherModel: Decodable{
     
-    var main: MainData?
+    var main: MainDataWeather?
     
-    init(main: MainData?) {
+    init(main: MainDataWeather?) {
         self.main = main
     }
 }
 
-struct MainData: Decodable{
+struct MainDataWeather: Decodable{
     let temp: Double
 }

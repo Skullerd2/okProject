@@ -1,10 +1,3 @@
-//
-//  AddAppViewController.swift
-//  OkProject
-//
-//  Created by Vadim on 06.09.2024.
-//
-
 import UIKit
 
 class AddAppViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {

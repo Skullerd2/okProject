@@ -1,26 +1,21 @@
 import UIKit
 import Alamofire
-import CoreLocation
 
-final class AppListViewController: UITableViewController, CLLocationManagerDelegate {
+final class AppListViewController: UITableViewController {
     
     private let networkManager = NetworkManager.shared
-    private var weather = WeatherModel(main: nil)
+    let locationManager = LocationManager.shared
     
-    let locationManager = CLLocationManager()
+    private var weather = WeatherModel(main: nil)
+    private var location = LocationModel(main: nil)
+    
+    
     var appList = [AppModel]()
     
     var tableViewStyle: TableViewStyle = .smallCells
     
-    var lat: Double = 0
-    var lon: Double = 0
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.requestLocation()
         
         switch(tableViewStyle){
         case .smallCells:
@@ -40,36 +35,11 @@ final class AppListViewController: UITableViewController, CLLocationManagerDeleg
     }
     
     @IBAction func changeStyleButtonTapped(_ sender: Any) {
-        
         changeStyle()
         let alertController = UIAlertController(title: "Style was changed", message: "New style is \(tableViewStyle)", preferredStyle: .alert)
         let alertAction = UIAlertAction(title: "Okay", style: .default)
         alertController.addAction(alertAction)
         present(alertController, animated: true)
-    }
-
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let location = locations.last {
-            lat = location.coordinate.latitude
-            lon = location.coordinate.longitude
-            print(lat, lon)
-            reverseGeocode(location: location)
-            fetchCurrentWeather()
-        }
-    }
-    
-    func reverseGeocode(location: CLLocation) {
-        let geocoder = CLGeocoder()
-        
-        geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
-            if let firstPlacemark = placemarks?.first {
-                print(firstPlacemark.locality ?? "Location not found")
-            }
-        }
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("Error: \(error)")
     }
     
     @IBAction func unwindToFirstScreen(_ segue: UIStoryboardSegue){
@@ -99,6 +69,15 @@ final class AppListViewController: UITableViewController, CLLocationManagerDeleg
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "appCell", for: indexPath) as? AppTableViewCell else {
             return UITableViewCell()
         }
+        
+        switch (appList[indexPath.row].appName){
+        case "weather":
+            fetchCurrentWeather(forCellAt: indexPath)
+        case "location":
+            print("location")
+        default:
+            break
+        }
         cell.configure(with: appList[indexPath.row])
         return cell
     }
@@ -106,16 +85,24 @@ final class AppListViewController: UITableViewController, CLLocationManagerDeleg
 
 extension AppListViewController{
     
-    func fetchCurrentWeather(){
-        networkManager.fetchCurrentWeather(lat: lat, lon: lon) { [weak self] result in
-            switch result{
-            case .success(let weather):
-                self?.weather = weather
-                print(Int(round(weather.main!.temp)))
-            case .failure(let error):
-                print("Error in fetch current weather: \(error.localizedDescription)")
+    func fetchCurrentWeather(forCellAt indexPath: IndexPath){
+        locationManager.fetchCurrentLocation { [weak self] lat, lon in
+            self?.networkManager.fetchCurrentWeather(lat: lat, lon: lon) { [weak self] result in
+                switch result{
+                case .success(let weather):
+                   
+                    DispatchQueue.main.async {
+                        self?.weather = weather
+                        self?.appList[indexPath.row].data = String(round(weather.main!.temp))
+                        self?.tableView.reloadRows(at: [indexPath], with: .automatic)
+                    }
+                case .failure(let error):
+                    print(error)
+                    self?.appList[indexPath.row].data = "Error"
+                }
             }
         }
+        
     }
 }
 
