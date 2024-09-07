@@ -153,7 +153,7 @@ extension AppListViewController{
                 switch result{
                 case .success(let weather):
                     self?.weather = weather
-                    self!.weatherData = String(round(weather.main!.temp))
+                    self!.weatherData = "temp: \(String(Int(round(weather.main!.temp))))"
                     self?.updateAppListData(forAppName: "weather", newData: "temp: \(self!.weatherData)")
                 case .failure(let error):
                     print(error)
