@@ -1,5 +1,4 @@
 import UIKit
-import Alamofire
 
 final class AppListViewController: UITableViewController {
     
@@ -41,21 +40,20 @@ final class AppListViewController: UITableViewController {
         case .normalCells:
             tableView.isUserInteractionEnabled = true
         }
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         DispatchQueue.main.async {
-            if self.appList.contains(where: { $0.appName == "location" }){
-                self.fetchCurrentLocation()
-            }
+            self.fetchCurrentLocation()
         }
-        if self.appList.contains(where: { $0.appName == "weather" }){
-            self.fetchCurrentWeather()
-        }
+        self.fetchCurrentWeather()
     }
     
     @IBAction func unwindToAppList(segue: UIStoryboardSegue) {
         if let sourceVC = segue.source as? AddAppViewController,
            let newApp = sourceVC.newApplication {
             appList.append(newApp)
+            fetchCurrentWeather()
             tableView.reloadData()
         }
     }
@@ -86,17 +84,13 @@ final class AppListViewController: UITableViewController {
         return appList.count
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { [weak self] (action, view, completionHandler) in
             self?.appList.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
-            
-            if !(self!.appList.contains(where: { $0.appName == "weather" })){
-                self?.weatherData = ""
-            }
-            if !(self!.appList.contains(where: { $0.appName == "location" })){
-                self?.locationData = ""
-            }
             completionHandler(true)
         }
         
@@ -107,25 +101,6 @@ final class AppListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "appCell", for: indexPath) as? AppTableViewCell else {
             return UITableViewCell()
-        }
-        
-        switch (appList[indexPath.row].appName){
-        case "weather":
-            if weatherData == ""{
-                fetchCurrentWeather()
-                weatherData = appList[indexPath.row].data
-            } else{
-                appList[indexPath.row].data = weatherData
-            }
-        case "location":
-            if locationData == ""{
-                fetchCurrentLocation()
-                locationData = appList[indexPath.row].data
-            } else{
-                appList[indexPath.row].data = locationData
-            }
-        default:
-            break
         }
         cell.configure(with: appList[indexPath.row])
         return cell
@@ -161,7 +136,7 @@ extension AppListViewController{
                 case .success(let weather):
                     self?.weather = weather
                     self!.weatherData = "temp: \(String(Int(round(weather.main!.temp))))"
-                    self?.updateAppListData(forAppName: "weather", newData: "temp: \(self!.weatherData)")
+                    self?.updateAppListData(forAppName: "weather", newData: "\(self!.weatherData)")
                 case .failure(let error):
                     print(error)
                     self?.weatherData = "temp: Error"
