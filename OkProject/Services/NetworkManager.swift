@@ -14,7 +14,7 @@ final class NetworkManager{
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         
         let headers: HTTPHeaders = [
-            "x-rapidapi-key": "27500767bcmshb28e0005a978693p18fc05jsne3f789cbe92b",
+            "x-rapidapi-key": "a4188e96edmshb23954a4b6eb650p19dc54jsnf5b9a733e953",
             "x-rapidapi-host": "open-weather13.p.rapidapi.com"
         ]
         
