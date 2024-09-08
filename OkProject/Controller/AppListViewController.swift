@@ -90,6 +90,13 @@ final class AppListViewController: UITableViewController {
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { [weak self] (action, view, completionHandler) in
             self?.appList.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
+            
+            if !(self!.appList.contains(where: { $0.appName == "weather" })){
+                self?.weatherData = ""
+            }
+            if !(self!.appList.contains(where: { $0.appName == "location" })){
+                self?.locationData = ""
+            }
             completionHandler(true)
         }
         
